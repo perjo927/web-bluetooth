@@ -1,0 +1,9 @@
+{
+  "name": "web-bluetooth",
+  "version": "0.0.1",
+  "description": "web bluetooth test",
+  "main": "index.js",
+  "repository": "https://github.com/perjo927/web-bluetooth.git",
+  "author": "perjo927 <perjo927@student.liu.se>",
+  "license": "MIT"
+}
