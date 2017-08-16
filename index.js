@@ -32,6 +32,9 @@ document.querySelector('#stopNotifications').addEventListener('click', function 
 });
 var myCharacteristic;
 
+
+/* accepts devices with a specific service open */
+
 async function onStartButtonClick() {
 
     let serviceUuid = document.querySelector('#service').value;
@@ -103,7 +106,7 @@ function handleNotifications(event) {
 
 }
 
-/* */
+/* accepts devices with any service open */
 
 const button = document.querySelector('#the-button');
 

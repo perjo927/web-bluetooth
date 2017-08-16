@@ -6,8 +6,8 @@
 
 <body>
     <form>
-        <input id="service" type="text" list="services" autofocus placeholder="Bluetooth Service">
-        <input id="characteristic" type="text" list="characteristics" placeholder="Bluetooth Characteristic">
+        <input id="service" value="battery_service" type="text" list="services" autofocus placeholder="Bluetooth Service">
+        <input id="characteristic" value="battery_level" type="text" list="characteristics" placeholder="Bluetooth Characteristic">
         <button id="startNotifications">Start notifications</button>
         <button id="stopNotifications">Stop notifications</button>
     </form>
@@ -15,7 +15,7 @@
     <datalist id="services">
         <option value="alert_notification">alert_notification</option>
         <option value="automation_io">automation_io</option>
-        <option selected value="battery_service">battery_service</option>
+        <option value="battery_service">battery_service</option>
         <option value="blood_pressure">blood_pressure</option>
         <option value="body_composition">body_composition</option>
         <option value="bond_management">bond_management</option>
@@ -66,7 +66,7 @@
         <option value="apparent_wind_speed">apparent_wind_speed</option>
         <option value="gap.appearance">gap.appearance</option>
         <option value="barometric_pressure_trend">barometric_pressure_trend</option>
-        <option selected value="battery_level">battery_level</option>
+        <option value="battery_level">battery_level</option>
         <option value="blood_pressure_feature">blood_pressure_feature</option>
         <option value="blood_pressure_measurement">blood_pressure_measurement</option>
         <option value="body_composition_feature">body_composition_feature</option>
