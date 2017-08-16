@@ -1,6 +1,6 @@
 const button = document.querySelector('#the-button');
 
-button.addEventListener('click', function() {
+button.addEventListener('click', async function() {
     // navigator.bluetooth.requestDevice({
     //     filters: [{
     //         services: ['battery_service']
@@ -34,12 +34,16 @@ button.addEventListener('click', function() {
     // });
     let options = {};
     options.acceptAllDevices = true;
-    navigator.bluetooth.requestDevice(options)
-        .then(device => {
-            console.log(device);
-            console.log('> Connected:        ' + device.gatt.connected);
-        })
-        .catch(error => {
-            console.log('Argh! ' + error);
-        });
+
+    try {
+        console.log('Requesting Bluetooth Device...');
+        console.log('with ' + JSON.stringify(options));
+        const device = await navigator.bluetooth.requestDevice(options);
+
+        console.log('> Name:             ' + device.name);
+        console.log('> Id:               ' + device.id);
+        console.log('> Connected:        ' + device.gatt.connected);
+    } catch (error) {
+        console.log('Argh! ' + error);
+    }
 });
