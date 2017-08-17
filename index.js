@@ -16,24 +16,22 @@ function isWebBluetoothEnabled() {
     }
 }
 
-document.querySelector('#startNotifications').addEventListener('click', function (event) {
+document.querySelector('#startNotifications').addEventListener('click', function(event) {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
         onStartButtonClick();
     }
 });
-document.querySelector('#stopNotifications').addEventListener('click', function (event) {
+document.querySelector('#stopNotifications').addEventListener('click', function(event) {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
         onStopButtonClick();
     }
 });
+
 var myCharacteristic;
-
-
-/* accepts devices with a specific service open */
 
 async function onStartButtonClick() {
 
@@ -49,19 +47,13 @@ async function onStartButtonClick() {
 
     try {
         console.log('Requesting Bluetooth Device...');
-        const device = await navigator.bluetooth.requestDevice({
-            filters: [{ services: [serviceUuid] }]
-        });
-
-        console.log('Connecting to GATT Server...');
+        let options = {};
+        options.filters = [{ services: [serviceUuid] }];
+        // options.acceptAllDevices = true; // if no filter
+        const device = await navigator.bluetooth.requestDevice(options);
         const server = await device.gatt.connect();
-
-        console.log('Getting Service...');
         const service = await server.getPrimaryService(serviceUuid);
-
-        console.log('Getting Characteristic...');
         myCharacteristic = await service.getCharacteristic(characteristicUuid);
-
         await myCharacteristic.startNotifications();
 
         logger('> Notifications started');
@@ -71,7 +63,7 @@ async function onStartButtonClick() {
         );
 
     } catch (error) {
-        console.log('Argh! ' + error);
+        console.log(error);
         logger(error);
     }
 }
@@ -84,11 +76,12 @@ async function onStopButtonClick() {
             myCharacteristic.removeEventListener('characteristicvaluechanged',
                 handleNotifications);
         } catch (error) {
-            console.log('Argh! ' + error);
+            console.log(error);
             logger(error);
         }
     }
 }
+
 function handleNotifications(event) {
     let value = event.target.value;
     logger(value);
@@ -105,28 +98,3 @@ function handleNotifications(event) {
     logger(text);
 
 }
-
-/* accepts devices with any service open */
-
-const button = document.querySelector('#the-button');
-
-button.addEventListener('click', async function () {
-    let options = {};
-    options.acceptAllDevices = true;
-    console.log("Pairing in progress");
-
-
-    try {
-        console.log('Requesting Bluetooth Device...');
-        console.log('with ' + JSON.stringify(options));
-        const device = await navigator.bluetooth.requestDevice(options);
-
-        console.log('> Name:             ' + device.name);
-        console.log('> Id:               ' + device.id);
-        console.log('> Connected:        ' + device.gatt.connected);
-    } catch (error) {
-        console.log('Argh! ' + error);
-        logger(error);
-    }
-
-});
