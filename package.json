@@ -1,6 +1,6 @@
 {
     "name": "web-bluetooth",
-    "version": "0.0.2",
+    "version": "0.1.0",
     "description": "web bluetooth test",
     "main": "index.js",
     "repository": "https://github.com/perjo927/web-bluetooth.git",
@@ -19,12 +19,10 @@
         "clean-webpack-plugin": "^0.1.16",
         "css-loader": "^0.28.5",
         "html-webpack-plugin": "^2.30.1",
+        "path": "^0.12.7",        
         "style-loader": "^0.18.2",
         "watch": "webpack --progress --watch",
         "webpack": "^3.5.4",
         "webpack-dev-server": "^2.7.1"
-    },
-    "dependencies": {
-        "path": "^0.12.7"
     }
 }
