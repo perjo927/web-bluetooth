@@ -6,25 +6,18 @@
 
 <body>
     <form>
-        <input id="service" value="battery_service" type="text" list="services" autofocus placeholder="Bluetooth Service">
-        <input id="characteristic" value="battery_level" type="text" list="characteristics" placeholder="Bluetooth Characteristic">
+        <select id="service" placeholder="Bluetooth Service" autofocus>
+            <option value="battery_service">battery_service</option>    
+            <option value="immediate_alert" selected>immediate_alert</option>
+        </select>
+        <select id="characteristic" placeholder="Bluetooth Characteristic">
+            <option value="alert_level">alert_level</option>
+            <option value="battery_level">battery_level</option>
+        </select>
+
         <button id="startNotifications">Start notifications</button>
         <button id="stopNotifications">Stop notifications</button>
     </form>
-
-    <datalist id="services">
-        <option value="alert_notification">alert_notification</option>
-        <option value="battery_service">battery_service</option>
-        <option value="immediate_alert">immediate_alert</option>
-    </datalist>
-    <datalist id="characteristics">
-        <option value="alert_category_id">alert_category_id</option>
-        <option value="alert_category_id_bit_mask">alert_category_id_bit_mask</option>
-        <option value="alert_level">alert_level</option>
-        <option value="alert_notification_control_point">alert_notification_control_point</option>
-        <option value="alert_status">alert_status</option>
-        <option value="battery_level">battery_level</option>
-    </datalist>
 
     <section id="results"></section>
 

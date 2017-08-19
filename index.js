@@ -1,3 +1,5 @@
+import './main.css';
+
 const results = document.querySelector('#results');
 
 function logger(text) {
