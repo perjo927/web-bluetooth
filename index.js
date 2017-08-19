@@ -18,14 +18,14 @@ function isWebBluetoothEnabled() {
     }
 }
 
-document.querySelector('#startNotifications').addEventListener('click', function(event) {
+document.querySelector('#startNotifications').addEventListener('click', function (event) {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
         onStartButtonClick();
     }
 });
-document.querySelector('#stopNotifications').addEventListener('click', function(event) {
+document.querySelector('#stopNotifications').addEventListener('click', function (event) {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
@@ -37,15 +37,8 @@ var myCharacteristic;
 
 async function onStartButtonClick() {
 
-    let serviceUuid = document.querySelector('#service').value;
-    if (serviceUuid.startsWith('0x')) {
-        serviceUuid = parseInt(serviceUuid);
-    }
-
-    let characteristicUuid = document.querySelector('#characteristic').value;
-    if (characteristicUuid.startsWith('0x')) {
-        characteristicUuid = parseInt(characteristicUuid);
-    }
+    let serviceUuid = "immediate_alert";
+    let characteristicUuid = "alert_level";
 
     try {
         console.log('Requesting Bluetooth Device...');
