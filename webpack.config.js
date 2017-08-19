@@ -1,4 +1,5 @@
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack'); //to access built-in plugins
 
@@ -14,8 +15,9 @@ module.exports = {
         port: 8081,
         hot: true,
     },
+    devtool: "source-map",
     plugins: [
-        // new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             title: 'Web Bluetooth Development',
             template: './index.html'
@@ -32,6 +34,13 @@ module.exports = {
                     presets: ['es2016']
                 }
             }
+        },
+        {
+            test: /\.css$/,
+            use: [
+                { loader: "style-loader" },
+                { loader: "css-loader" }
+            ]
         }]
     }
 };
