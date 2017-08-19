@@ -1,6 +1,6 @@
 import './main.css';
 
-const results = document.querySelector('#results');
+const results = document.querySelector('#log');
 
 function logger(text) {
     let message = document.createElement('div');
@@ -12,66 +12,59 @@ function isWebBluetoothEnabled() {
     if (navigator.bluetooth) {
         return true;
     } else {
-        console.log('Web Bluetooth API is not available.\n' +
+        logger('Web Bluetooth API is not available.\n' +
             'Please make sure the "Experimental Web Platform features" flag is enabled.');
         return false;
     }
 }
 
-document.querySelector('#startNotifications').addEventListener('click', function (event) {
+document.querySelector('#start').addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
-        onStartButtonClick();
+        start();
     }
 });
-document.querySelector('#stopNotifications').addEventListener('click', function (event) {
+document.querySelector('#stop').addEventListener('click', (event) => {
     event.stopPropagation();
     event.preventDefault();
     if (isWebBluetoothEnabled()) {
-        onStopButtonClick();
+        stop();
     }
 });
 
-var myCharacteristic;
+var characteristic;
 
-async function onStartButtonClick() {
+async function start() {
 
-    let serviceUuid = "immediate_alert";
-    let characteristicUuid = "alert_level";
+    const serviceUuid = "immediate_alert";
+    const characteristicUuid = "alert_level";
 
     try {
-        console.log('Requesting Bluetooth Device...');
         let options = {};
         options.filters = [{ services: [serviceUuid] }];
-        // options.acceptAllDevices = true; // if no filter
+
         const device = await navigator.bluetooth.requestDevice(options);
         const server = await device.gatt.connect();
         const service = await server.getPrimaryService(serviceUuid);
-        myCharacteristic = await service.getCharacteristic(characteristicUuid);
-        await myCharacteristic.startNotifications();
+        characteristic = await service.getCharacteristic(characteristicUuid);
+        await characteristic.startNotifications();
 
-        logger('> Notifications started');
-        myCharacteristic.addEventListener(
-            'characteristicvaluechanged',
-            handleNotifications
-        );
+        logger('Notifications enabled');
+        characteristic.addEventListener('characteristicvaluechanged', handleNotifications);
 
     } catch (error) {
-        console.log(error);
         logger(error);
     }
 }
 
-async function onStopButtonClick() {
-    if (myCharacteristic) {
+async function stop() {
+    if (characteristic) {
         try {
-            await myCharacteristic.stopNotifications();
-            console.log('> Notifications stopped');
-            myCharacteristic.removeEventListener('characteristicvaluechanged',
-                handleNotifications);
+            await characteristic.stopNotifications();
+            logger('Notifications disabled');
+            characteristic.removeEventListener('characteristicvaluechanged', handleNotifications);
         } catch (error) {
-            console.log(error);
             logger(error);
         }
     }
@@ -79,17 +72,6 @@ async function onStopButtonClick() {
 
 function handleNotifications(event) {
     let value = event.target.value;
-    logger(value);
-
-    let a = [];
-    // Convert raw data bytes to hex values just for the sake of showing something.
-    // In the "real" world, you'd use data.getUint8, data.getUint16 or even
-    // TextDecoder to process raw data bytes.
-    for (let i = 0; i < value.byteLength; i++) {
-        a.push('0x' + ('00' + value.getUint8(i).toString(16)).slice(-2));
-    }
-    const text = '> ' + a.join(' ');
-    console.log(text);
-    logger(text);
-
+    let uint8 = value.getUint8();
+    logger(uint8);
 }
