@@ -1,6 +1,6 @@
 {
     "name": "web-bluetooth",
-    "version": "0.0.3",
+    "version": "0.1.0",
     "description": "web bluetooth test",
     "main": "index.js",
     "repository": "https://github.com/perjo927/web-bluetooth.git",
